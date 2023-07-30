@@ -28,8 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/projects', [ProjectController::class, 'index']);
-    Route::get('/projects/create', [ProjectController::class, 'create']);
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
     Route::get('/projects/{project}', [ProjectController::class, 'show']);
     Route::post('/projects', [ProjectController::class, 'store']);
 });

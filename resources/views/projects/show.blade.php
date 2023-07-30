@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title></title>
-    </head>
-    <body>
-        <h1>{{ $project->title }}</h1>
-        <div>{{ $project->description}}</div>
-    </body>
-</html>
+<x-app-layout>
+    <h1>{{ $project->title }}</h1>
+    <div>{{ $project->description}}</div>
+</x-app-layout>
