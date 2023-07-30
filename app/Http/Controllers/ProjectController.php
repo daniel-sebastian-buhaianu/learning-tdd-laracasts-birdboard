@@ -35,4 +35,9 @@ class ProjectController extends Controller
             'project' => $project
         ]);
     }
+
+    public function create()
+    {
+        return view('projects.create');
+    }
 }
