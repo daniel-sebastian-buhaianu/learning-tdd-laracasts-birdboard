@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,14 +12,20 @@ class ProjectsTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    public function test_that_a_user_can_create_a_project(): void
+    public function test_only_authenticated_users_can_create_projects(): void
     {
-        $this->withoutExceptionHandling();
+        $attributes = Project::factory()->raw();
 
-        $attributes = [
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph
-        ];
+        $this->post('/projects', $attributes)->assertRedirect('login');
+    }
+
+    public function test_user_can_create_a_project(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+        
+        $attributes = Project::factory()->raw(['owner_id' => $user->id]);
 
         $this->post('/projects', $attributes)->assertRedirect('/projects');
 
@@ -27,10 +34,8 @@ class ProjectsTest extends TestCase
         $this->get('/projects')->assertSee($attributes['title']);
     }
 
-    public function test_that_a_user_can_view_a_project(): void
+    public function test_user_can_view_a_project(): void
     {
-        $this->withoutExceptionHandling();
-
         $project = Project::factory()->create();
 
         $this->get($project->path())
@@ -38,15 +43,19 @@ class ProjectsTest extends TestCase
             ->assertSee($project->description);
     }
 
-    public function test_that_a_project_requires_a_title(): void
+    public function test_project_requires_a_title(): void
     {
+        $this->actingAs(User::factory()->create());
+        
         $attributes = Project::factory()->raw(['title' => '']);
         
         $this->post('/projects', $attributes)->assertSessionHasErrors('title');
     }
 
-    public function test_that_a_project_requires_a_description(): void
+    public function test_project_requires_a_description(): void
     {
+        $this->actingAs(User::factory()->create());
+
         $attributes = Project::factory()->raw(['description' => '']);
 
         $this->post('/projects', $attributes)->assertSessionHasErrors('description');

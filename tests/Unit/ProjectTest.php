@@ -10,7 +10,7 @@ class ProjectTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_that_it_has_a_path(): void
+    public function test_it_has_a_path(): void
     {
         $project = Project::factory()->create();
 
