@@ -11,4 +11,8 @@
     .card {
         @apply bg-white p-5 rounded-lg shadow;
     }
+    
+    .editable-text-input {
+        @apply !border-transparent hover:cursor-default focus:ring-0 focus:cursor-auto active:cursor-auto;
+    }
 }
