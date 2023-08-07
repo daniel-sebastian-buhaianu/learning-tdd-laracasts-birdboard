@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn-primary {
+        @apply bg-blue text-white rounded-lg text-sm py-2 px-5;
+        box-shadow: 0 2px 7px 0 #b0eaff;
+    }
+}

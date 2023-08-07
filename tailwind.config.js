@@ -19,9 +19,13 @@ export default {
             },
             colors: {
                 'gray': {
-                    'custom': 'rgba(0, 0, 0, 0.4)',
+                    'DEFAULT': 'rgba(0, 0, 0, 0.4)',
+                    'light': '#f5f6f9',
                 },
-                'gray-light': '#f5f6f9',
+                'blue': {
+                    'DEFAULT': '#47cdff',
+                    'light': '#8ae2fe',
+                },
             },
         },
     },
