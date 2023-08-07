@@ -12,6 +12,25 @@ class ProjectTasksTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_guests_cannot_add_tasks_to_projects(): void
+    {
+        $project = Project::factory()->create();
+
+        $this->post($project->path() . '/tasks')->assertRedirect('login');
+    }
+
+    public function test_only_the_owner_of_a_project_can_add_tasks(): void
+    {
+        $this->signIn();
+
+        $project = Project::factory()->create();
+        
+        $this->post($project->path() . '/tasks', ['body' => 'new task'])
+            ->assertForbidden();
+
+        $this->assertDatabaseMissing('tasks', ['body' => 'new task']);
+    }
+
     public function test_project_can_have_tasks(): void
     {
         $this->signIn();
