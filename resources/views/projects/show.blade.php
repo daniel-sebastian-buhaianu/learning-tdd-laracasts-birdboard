@@ -5,7 +5,7 @@
                 <a href="/projects">My Projects</a> / {{ $project->title }}
             </p>
 
-            <a href="{{ route('projects.create') }}" class="btn-primary">New Project</a>
+            <a href="{{ $project->path() }}/edit" class="btn-primary">Edit Project</a>
         </div>
     </header>
 
@@ -59,7 +59,7 @@
             </div>
 
             <div class="lg:w-1/4 px-3">
-               @include('projects.card')
+               @include('projects._card')
             </div>
         </div>
     </main>
