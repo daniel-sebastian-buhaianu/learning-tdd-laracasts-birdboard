@@ -13,7 +13,8 @@ class ManageProjectsTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    public function test_guests_cannot_manage_projects(): void
+    /** @test */
+    public function a_guest_cannot_manage_projects(): void
     {
         $project = Project::factory()->create();
 
@@ -24,7 +25,8 @@ class ManageProjectsTest extends TestCase
         $this->post('/projects', $project->toArray())->assertRedirect('login');
     }
 
-    public function test_users_can_create_a_project(): void
+    /** @test */
+    public function a_user_can_create_a_project(): void
     {
         $user = User::factory()->create();
 
@@ -46,7 +48,8 @@ class ManageProjectsTest extends TestCase
             ->assertSee($attributes['notes']);
     }
 
-    public function test_users_can_update_a_project(): void
+    /** @test */
+    public function a_user_can_update_a_project(): void
     {
         $project = ProjectArrangement::create();
 
@@ -59,7 +62,8 @@ class ManageProjectsTest extends TestCase
         $this->assertDatabaseHas('projects', $attributes);
     }
 
-    public function test_users_can_update_a_projects_general_notes(): void
+    /** @test */
+    public function a_user_can_update_a_projects_general_notes(): void
     {
         $project = ProjectArrangement::create();
 
@@ -69,7 +73,8 @@ class ManageProjectsTest extends TestCase
         $this->assertDatabaseHas('projects', $attributes);
     }
 
-    public function test_users_can_view_their_project(): void
+    /** @test */
+    public function a_user_can_view_their_project(): void
     {
         $project = ProjectArrangement::create();
 
@@ -79,7 +84,8 @@ class ManageProjectsTest extends TestCase
             ->assertSee($project->description);
     }
 
-    public function test_users_cannot_view_others_project(): void
+    /** @test */
+    public function a_user_cannot_view_others_project(): void
     {
         $this->signIn();
 
@@ -88,7 +94,8 @@ class ManageProjectsTest extends TestCase
         $this->get($project->path())->assertStatus(403);
     }
 
-    public function test_users_cannot_update_others_project(): void
+    /** @test */
+    public function a_user_cannot_update_others_project(): void
     {
         $this->signIn();
 
@@ -97,7 +104,8 @@ class ManageProjectsTest extends TestCase
         $this->patch($project->path())->assertStatus(403);
     }
 
-    public function test_project_requires_a_title(): void
+    /** @test */
+    public function a_project_requires_a_title(): void
     {
         $this->signIn();
 
@@ -106,7 +114,8 @@ class ManageProjectsTest extends TestCase
         $this->post('/projects', $attributes)->assertSessionHasErrors('title');
     }
 
-    public function test_project_requires_a_description(): void
+    /** @test */
+    public function a_project_requires_a_description(): void
     {
         $this->signIn();
 

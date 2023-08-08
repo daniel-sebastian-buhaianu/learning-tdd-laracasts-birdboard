@@ -11,7 +11,8 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
     
-    public function test_it_has_projects(): void
+    /** @test */
+    public function it_has_projects(): void
     {
         $user = User::factory()->create();
 

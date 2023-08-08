@@ -11,14 +11,16 @@ class TaskTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_it_belongs_to_a_project(): void
+    /** @test */
+    public function it_belongs_to_a_project(): void
     {
         $task = Task::factory()->create();
 
         $this->assertInstanceOf(Project::class, $task->project);
     }
 
-    public function test_it_has_a_path(): void
+    /** @test */
+    public function it_has_a_path(): void
     {
         $task = Task::factory()->create();
 
@@ -35,5 +37,17 @@ class TaskTest extends TestCase
         $task->complete();
 
         $this->assertTrue($task->fresh()->completed);
+    }
+
+    /** @test */
+    public function it_can_be_marked_as_incomplete()
+    {
+        $task = Task::factory()->create(['completed' => true]);
+
+        $this->assertTrue($task->completed);
+
+        $task->incomplete();
+
+        $this->assertFalse($task->fresh()->completed);
     }
 }

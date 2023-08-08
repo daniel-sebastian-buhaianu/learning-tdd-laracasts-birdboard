@@ -11,21 +11,24 @@ class ProjectTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_it_has_a_path(): void
+    /** @test */
+    public function it_has_a_path(): void
     {
         $project = Project::factory()->create();
 
         $this->assertEquals('/projects/' . $project->id, $project->path());
     }
 
-    public function test_it_belongs_to_an_owner(): void
+    /** @test */
+    public function it_belongs_to_an_owner(): void
     {
         $project = Project::factory()->create();
 
         $this->assertInstanceOf(User::class, $project->owner);
     }
 
-    public function test_it_can_add_a_task(): void
+    /** @test */
+    public function it_can_add_a_task(): void
     {
         $project = Project::factory()->create();
 
