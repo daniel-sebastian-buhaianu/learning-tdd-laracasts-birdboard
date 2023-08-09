@@ -27,14 +27,21 @@ class DatabaseSeeder extends Seeder
             'email' => 'dsb99.dev@gmail.com',
         ]);
 
-        $projects = Project::factory(3)->create([
-            'owner_id' => $user
+        $project = Project::factory()->create([
+            'owner_id' => $user,
+            'title' => 'Teamwork Project',
+            'description' => 'Cool project working in a team.'
         ]);
 
-        foreach ($projects as $project) {
-            Task::factory(3)->create([
-                'project_id' => $project
-            ]);
-        }
+        Task::factory(3)->create([
+            'project_id' => $project
+        ]);
+        
+        $testUser = User::factory()->create([
+            'name' => 'Test',
+            'email' => 'test@test.com'
+        ]);
+
+        $project->invite($testUser);
     }
 }
