@@ -27,7 +27,9 @@ class ProjectArrangement
 
     public function create()
     {
-        $project = Project::factory()->create();
+        $project = $this->user
+            ? Project::factory()->create(['owner_id' => $this->user])
+            : Project::factory()->create();
 
         Task::factory($this->tasksCount)->create([
             'project_id' => $project->id

@@ -1,1 +1,1 @@
-You <b>created a project</b>: "{{ $activity->project->title }}".
+{{ $activity->user->name }} <b>created a project</b>: "{{ $activity->project->title }}".

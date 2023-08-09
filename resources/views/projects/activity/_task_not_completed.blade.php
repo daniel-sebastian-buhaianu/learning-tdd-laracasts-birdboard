@@ -1,1 +1,1 @@
-You <b>marked a task as uncompleted</b>: "{{ $activity->subject->body }}".
+{{ $activity->user->name }} <b>marked a task as uncompleted</b>: "{{ $activity->subject->body }}".

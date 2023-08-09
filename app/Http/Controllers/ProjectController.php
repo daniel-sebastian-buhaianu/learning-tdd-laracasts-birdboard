@@ -13,6 +13,11 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('projects.create');
+    }
+
     public function store()
     {
         $project = auth()->user()->projects()->create($this->validateRequest());
@@ -43,9 +48,13 @@ class ProjectController extends Controller
         return redirect($project->path());
     }
 
-    public function create()
+    public function destroy(Project $project)
     {
-        return view('projects.create');
+        $this->authorize('update', $project);
+
+        $project->delete();
+        
+        return redirect('/projects');
     }
 
     protected function validateRequest()

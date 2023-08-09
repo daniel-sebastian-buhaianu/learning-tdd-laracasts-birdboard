@@ -14,7 +14,7 @@ class ManageProjectsTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    public function a_guest_cannot_manage_projects(): void
+    public function guests_cannot_manage_projects(): void
     {
         $project = Project::factory()->create();
 
@@ -23,6 +23,7 @@ class ManageProjectsTest extends TestCase
         $this->get($project->path())->assertRedirect('login');
         $this->get($project->path().'/edit')->assertRedirect('login');
         $this->post('/projects', $project->toArray())->assertRedirect('login');
+        $this->delete($project->path())->assertRedirect('login');
     }
 
     /** @test */
@@ -49,8 +50,30 @@ class ManageProjectsTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_update_a_project(): void
+    public function a_user_can_delete_their_project()
     {
+        $project = ProjectArrangement::create();
+
+        $this->actingAs($project->owner)
+            ->delete($project->path())
+            ->assertRedirect('/projects');
+        
+        $this->assertDatabaseMissing('projects', $project->only('id'));
+    }
+
+    /** @test */
+    public function a_user_cannot_delete_others_project()
+    {
+        $project = ProjectArrangement::create();
+
+        $this->actingAs($this->signIn())
+            ->delete($project->path())
+            ->assertForbidden();
+    }
+
+    /** @test */
+    public function a_user_can_update_a_project(): void
+    {        
         $project = ProjectArrangement::create();
 
         $this->actingAs($project->owner)
