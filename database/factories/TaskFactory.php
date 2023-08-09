@@ -18,7 +18,7 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'project_id' => Project::factory()->create(),
+            'project_id' => Project::factory(),
             'body' => fake()->sentence(),
             'completed' => false,
         ];

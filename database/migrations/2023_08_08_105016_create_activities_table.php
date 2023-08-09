@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('project_id')->onDelete('cascade');
             $table->nullableMorphs('subject');
             $table->string('description');
+            $table->text('changes')->nullable();
             $table->timestamps();
         });
     }

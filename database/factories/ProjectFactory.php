@@ -21,7 +21,7 @@ class ProjectFactory extends Factory
             'title' => fake()->sentence(4),
             'description' => fake()->sentence(4),
             'notes' => 'general notes here...',
-            'owner_id' => User::factory()->create(),
+            'owner_id' => User::factory(),
         ];
     }
 }
