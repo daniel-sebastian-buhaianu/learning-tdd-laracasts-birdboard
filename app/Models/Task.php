@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
-use App\Models\Activity;
 use App\Models\Project;
+use App\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordsActivity;
 
     protected $guarded = [];
 
     protected $touches = ['project'];
+
+    protected static $recordableActivities = ['created', 'deleted'];
 
     protected $casts = [
         'completed' => 'boolean'
@@ -41,18 +43,5 @@ class Task extends Model
     public function path()
     {
         return "/projects/{$this->project->id}/tasks/{$this->id}";
-    }
-
-    public function activity()
-    {
-        return $this->morphMany(Activity::class, 'subject')->latest();
-    }
-
-    public function recordActivity(string $description)
-    {
-        $this->activity()->create([
-            'project_id' => $this->project_id,
-            'description' => $description,
-        ]);
     }
 }

@@ -4,16 +4,14 @@ namespace App\Models;
 
 use App\Models\Activity;
 use App\Models\User;
+use App\RecordsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, RecordsActivity;
     protected $guarded = [];
-
-    public $old = [];
 
     public function path()
     {
@@ -38,23 +36,5 @@ class Project extends Model
     public function activity()
     {
         return $this->hasMany(Activity::class)->latest();
-    }
-
-    public function recordActivity(string $description)
-    {
-        $this->activity()->create([
-            'description' => $description,
-            'changes' => $this->activityChanges($description)
-        ]);
-    }
-
-    protected function activityChanges(string $description)
-    {
-        if (strstr($description, 'updated')) {
-            return [
-                'before' => Arr::except(array_diff($this->old, $this->getAttributes()), 'updated_at'),
-                'after' => Arr::except($this->getChanges(), 'updated_at'),
-            ];
-        }
     }
 }
