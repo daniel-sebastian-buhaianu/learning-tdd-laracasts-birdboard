@@ -1,1 +1,1 @@
-You updated a project.
+You <b>updated the project</b>: "{{ $activity->project->title }}".
