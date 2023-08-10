@@ -10,6 +10,12 @@ export default {
     ],
 
     theme: {
+        backgroundColor: {
+            page: 'var(--page-background-color)',
+            card: 'var(--card-background-color)',
+            button: 'var(--button-background-color)',
+            header: 'var(--header-background-color)',
+        },
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
@@ -18,11 +24,12 @@ export default {
                 'DEFAULT': '0 0 5px 0 rgba(0, 0, 0, 0.08)',
             },
             colors: {
-                'gray': {
+                default: 'var(--text-default-color)',
+                gray: {
                     'DEFAULT': 'rgba(0, 0, 0, 0.4)',
                     'light': '#f5f6f9',
                 },
-                'blue': {
+                blue: {
                     'DEFAULT': '#47cdff',
                     'light': '#8ae2fe',
                 },

@@ -4,15 +4,37 @@
 
 @layer components {
     .btn-primary {
-        @apply bg-blue text-white rounded-lg text-sm py-2 px-5;
+        @apply bg-button text-white rounded-lg text-sm py-2 px-5;
         box-shadow: 0 2px 7px 0 #b0eaff;
     }
 
     .card {
-        @apply bg-white p-5 rounded-lg shadow;
+        @apply bg-card p-5 rounded-lg shadow;
     }
     
     .editable-text-input {
         @apply !border-transparent hover:cursor-default focus:ring-0 focus:cursor-auto active:cursor-auto;
     }
+}
+
+.theme-light {
+    --page-background-color: #f5f6f9;
+    --card-background-color: white;
+    --button-background-color: #47cdff;
+    --header-background-color: white;
+
+    --text-default-color: #000;
+}
+
+.theme-dark {
+    --page-background-color: #17181E;
+    --card-background-color: #1F2027;
+    --button-background-color: #59B6F9;
+    --header-background-color: #1F2027;
+
+    --text-default-color: #fff;
+}
+
+body {
+    color: var(--text-default-color);
 }

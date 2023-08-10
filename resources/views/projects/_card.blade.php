@@ -3,7 +3,7 @@
         <a href="{{ $project->path() }}">{{ $project->title }}</a>
     </h3>
 
-    <div class="text-gray mb-2 flex-1">{{ Str::limit($project->description) }}</div>
+    <div class="mb-2 flex-1">{{ Str::limit($project->description) }}</div>
 
     @can ('manage', $project)
         <footer>

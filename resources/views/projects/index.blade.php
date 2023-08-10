@@ -1,7 +1,7 @@
 <x-app-layout>
     <header class="flex items-center py-4">
         <div class="flex justify-between items-end w-full">
-            <h2 class="text-gray text-sm font-normal">My Projects</h2>
+            <h2 class="text-default text-sm font-normal">My Projects</h2>
 
             <a href="{{ route('projects.create') }}" class="btn-primary">New Project</a>
         </div>
