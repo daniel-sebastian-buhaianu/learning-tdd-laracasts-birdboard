@@ -29,21 +29,12 @@ class ManageProjectsTest extends TestCase
     /** @test */
     public function a_user_can_create_a_project(): void
     {
-        $user = User::factory()->create();
-
-        $this->signIn($user);
+        $this->signIn();
 
         $this->get('/projects/create')->assertStatus(200);
-        
-        $attributes = Project::factory()->raw(['owner_id' => $user->id]);
 
-        $response = $this->post('/projects', $attributes);
-
-        $project = Project::where($attributes)->first();
-
-        $response->assertRedirect($project->path());
-
-        $this->get($project->path())
+        $this->followingRedirects()
+            ->post('/projects', $attributes = Project::factory()->raw())
             ->assertSee($attributes['title'])
             ->assertSee($attributes['description'])
             ->assertSee($attributes['notes']);
@@ -73,8 +64,16 @@ class ManageProjectsTest extends TestCase
     public function a_user_cannot_delete_others_project()
     {
         $project = ProjectArrangement::create();
+        
+        $user = $this->signIn();
 
-        $this->actingAs($this->signIn())
+        $this->actingAs($user)
+            ->delete($project->path())
+            ->assertForbidden();
+        
+        $project->invite($user);
+
+        $this->actingAs($user)
             ->delete($project->path())
             ->assertForbidden();
     }
