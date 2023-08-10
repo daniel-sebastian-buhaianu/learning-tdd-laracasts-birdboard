@@ -35,13 +35,5 @@
         <a href="/projects" class="text-sm underline ml-1">Cancel</a>
     </div>
    
-    @if ($errors->any())
-        <div class="w-full mt-3">
-            <ul class="text-red-600 text-sm">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @include('_errors')
 </div>

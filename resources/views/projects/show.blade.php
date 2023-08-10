@@ -43,6 +43,8 @@
                                     <input name="completed" type="checkbox" onChange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}>
                                 </div>
                             </form>
+
+                            @include('_errors')
                         </div>
                     @endforeach
 
@@ -71,13 +73,19 @@
 
                         <button type="submit" class="btn-primary">Save</button>
                     </form>
+
+                    @include('_errors')
                 </div>
             </div>
 
             <div class="lg:w-1/4 px-3">
-               @include('projects._card')
+                @include('projects._card')
 
-               @include('projects.activity._card')
+                @include('projects.activity._card')
+
+                @can ('manage', $project)
+                    @include('projects._invite')
+                @endcan
             </div>
         </div>
     </main>

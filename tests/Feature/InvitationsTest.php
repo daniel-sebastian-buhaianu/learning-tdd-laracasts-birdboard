@@ -17,10 +17,19 @@ class InvitationsTest extends TestCase
     public function only_project_owners_can_invite_users()
     {
         $project = ProjectArrangement::create();
+        $user = User::factory()->create();
 
-        $this->actingAs($this->signIn())
+        $assertInvitationForbidden = function () use ($user, $project) {
+            $this->actingAs($user)
             ->post($project->path() . '/invitations')
             ->assertForbidden();
+        };
+
+        $assertInvitationForbidden();
+        
+        $project->invite($user);
+
+        $assertInvitationForbidden();
     }
 
     /** @test */
@@ -52,7 +61,7 @@ class InvitationsTest extends TestCase
             ])
             ->assertSessionHasErrors([
                 'email' => 'The user you are inviting must have a Birdboard account.'
-            ]);
+            ], null, 'invitations');
     }
 
     /** @test */
